@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-
 source 'https://rubygems.org'
-
 ruby '3.4.2'
-
 gem 'arabic-letter-connector', require: 'arabic-letter-connector/logic'
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-secretsmanager', require: false
@@ -48,7 +45,6 @@ gem 'strip_attributes'
 gem 'turbo-rails'
 gem 'twitter_cldr', require: false
 gem 'tzinfo-data'
-
 group :development, :test do
   gem 'better_html'
   gem 'bullet'
@@ -64,7 +60,6 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
 end
-
 group :development do
   gem 'annotaterb'
   gem 'brakeman', require: false
@@ -72,9 +67,10 @@ group :development do
   gem 'letter_opener_web'
   gem 'web-console'
 end
-
 group :test do
   gem 'capybara'
   gem 'cuprite'
   gem 'webmock'
 end
+
+gem 'rack-cors'
