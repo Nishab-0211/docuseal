@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include IframeSupport  # ← ADD THIS LINE
-
+  protect_from_forgery with: :null_session, if: -> { request.format.json? || request.headers['X-Requested-With'] == 'iframe' }
+  
   BROWSER_LOCALE_REGEXP = /\A\w{2}(?:-\w{2})?/
 
   include ActiveStorage::SetCurrent
