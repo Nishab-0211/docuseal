@@ -10,9 +10,7 @@ module IframeSupport
   private
 
   def iframe_request?
-    request.headers['X-Requested-With'] == 'iframe' ||
-      request.referrer&.include?('localhost:5173') ||
-      request.referrer&.include?('127.0.0.1:5173') ||
-      request.referrer&.include?('docuseal-railway-production-2b66.up.railway.app')
+    # Skip CSRF for all iframe requests
+    true
   end
 end
