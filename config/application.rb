@@ -45,5 +45,14 @@ module DocuSeal
     autoloaders.once.do_not_eager_load("#{Turbo::Engine.root}/app/channels") # https://github.com/hotwired/turbo-rails/issues/512
 
     ActiveSupport.run_load_hooks(:application_config, self)
+    config.action_dispatch.default_headers.delete('X-Frame-Options')
+    
+    # CSRF protection settings for iframe
+    config.action_controller.forgery_protection_origin_check = false
+    config.action_controller.per_form_csrf_tokens = false
+    config.action_controller.allow_forgery_protection = true
+    
+    # Cookie settings for cross-origin
+    config.action_dispatch.cookies_same_site_protection = :none
   end
 end
