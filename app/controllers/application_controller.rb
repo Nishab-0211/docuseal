@@ -144,4 +144,23 @@ class ApplicationController < ActionController::Base
       policy.directives['connect-src'] << 'ws:' if Rails.env.development?
     end
   end
+   before_action :set_iframe_headers
+  skip_before_action :verify_authenticity_token, if: :iframe_request?
+  
+  private
+  
+  def set_iframe_headers
+    response.headers.delete('X-Frame-Options')
+    response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:5173 https://*.railway.app"
+    response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, X-CSRF-Token'
+  end
+  
+  def iframe_request?
+    request.headers['Sec-Fetch-Dest'] == 'iframe' || 
+    request.referrer&.include?('localhost:5173') ||
+    request.headers['Origin']&.include?('localhost:5173')
+  end
 end
